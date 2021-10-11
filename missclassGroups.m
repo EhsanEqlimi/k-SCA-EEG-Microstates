@@ -7,7 +7,7 @@
 % points in each group.
 % ngroups: number of groups
 %--------------------------------------------------------------------------
-% Copyright @ Ehsan Elhamifar, 2010
+% Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
 

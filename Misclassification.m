@@ -6,7 +6,7 @@
 % Missrate: 3x1 vector with misclassification rates of three forms of
 % spectral clustering
 %--------------------------------------------------------------------------
-% Copyright @ Ehsan Elhamifar, 2010
+% Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
 

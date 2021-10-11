@@ -10,7 +10,7 @@
 % Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
-function [missrate,CMat,grps,Clus] = SSC(X,r,affine,alpha,outlier,rho,s)
+function [CMat,grps] = SSC_EE(X,r,affine,alpha,outlier,rho,n)
 
 if (nargin < 6)
     rho = 1;
@@ -28,7 +28,7 @@ if (nargin < 2)
     r = 0;
 end
 
-n = max(s);
+% n = max(s);
 Xp = DataProjection(X,r);
 
 if (~outlier)
@@ -41,5 +41,5 @@ else
 end
 
 CKSym = BuildAdjacency(thrC(C,rho));
-[grps,Clus]= SpectralClustering(CKSym,n);
-missrate = Misclassification(grps,s);
+grps = SpectralClustering(CKSym,n);
+% missrate = Misclassification(grps,s);

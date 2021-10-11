@@ -1,36 +1,35 @@
 %--------------------------------------------------------------------------
 % This function takes a NxN coefficient matrix and returns a NxN adjacency
-% matrix by choosing only the K strongest connections in the similarity
-% graph
+% matrix by choosing the K strongest connections in the similarity graph
 % CMat: NxN coefficient matrix
-% K: number of strongest edges to keep; if K=0 use all the coefficients
+% K: number of strongest edges to keep; if K=0 use all the exiting edges
 % CKSym: NxN symmetric adjacency matrix
 %--------------------------------------------------------------------------
-% Copyright @ Ehsan Elhamifar, 2010
+% Copyright @ Ehsan Elhamifar, 2012
 %--------------------------------------------------------------------------
 
 
-function CKSym = BuildAdjacency(CMat,K)
+function [CKSym,CAbs] = BuildAdjacency(CMat,K)
+
+if (nargin < 2)
+    K = 0;
+end
 
 N = size(CMat,1);
 CAbs = abs(CMat);
-for i = 1:N
-    c = CAbs(:,i);
-    [PSrt,PInd] = sort(c,'descend');
-    CAbs(:,i) = CAbs(:,i) ./ abs( c(PInd(1)) );
-end
 
-CSym = CAbs + CAbs';
+[Srt,Ind] = sort( CAbs,1,'descend' );
 
-if (K ~= 0)
-    [Srt,Ind] = sort( CSym,1,'descend' );
-    CK = zeros(N,N);
+if (K == 0)
+    for i = 1:N
+        CAbs(:,i) = CAbs(:,i) ./ (CAbs(Ind(1,i),i)+eps);
+    end
+else
     for i = 1:N
         for j = 1:K
-            CK( Ind(j,i),i ) = CSym( Ind(j,i),i ) ./ CSym( Ind(1,i),i );
+            CAbs(Ind(j,i),i) = CAbs(Ind(j,i),i) ./ (CAbs(Ind(1,i),i)+eps);
         end
     end
-    CKSym = CK + CK';
-else
-    CKSym = CSym;
 end
+
+CKSym = CAbs + CAbs';
